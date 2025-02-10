@@ -28,7 +28,7 @@ commands:
   - id: copyconfig
     exec:
       component: python
-      commandLine: "[[ ! -d /home/user/.continue ]] && mkdir /home/user/.continue && cp /projects/python-template/continue-config.json /home/user/.continue/config.json"
+      commandLine: "[[ ! -d /home/user/.continue ]] && mkdir /home/user/.continue && cp /projects/python-template/.continue.example/config.json /home/user/.continue/config.json"
 events:
   postStart:
     - copyconfig
