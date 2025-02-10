@@ -25,3 +25,18 @@ commands:
       commandLine: python -m venv .venv && . .venv/bin/activate && python hello-world.py
       group:
         kind: run
+  - id: copyconfig
+    exec:
+      component: python
+      commandLine: "cp -p /etc/secret/continue-config-secret/.continuerc.json /home/user/.continue/config.json"
+events:
+  postStart:
+    - copyconfig
+
+#   - id: copyconfig
+#     exec:
+#       component: python
+#       commandLine: "[[ ! -d /home/user/.continue ]] && mkdir /home/user/.continue && cp /projects/python-template/.continue.example/config.json /home/user/.continue/config.json"
+# events:
+#   postStart:
+#     - copyconfig
