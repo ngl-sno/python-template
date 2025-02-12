@@ -172,4 +172,4 @@ cython_debug/
 
 
 # Other
-./config.json
+/config.json

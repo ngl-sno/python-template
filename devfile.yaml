@@ -1,6 +1,6 @@
 schemaVersion: 2.2.2
 metadata:
-  name: ngl-sno-template
+  name: ngl-python-fastapi-template
 components:
   - name: python
     container:
@@ -13,27 +13,56 @@ components:
       cpuLimit: '2'
       cpuRequest: '1'
       mountSources: true
+      endpoints:
+        - name: port-8000
+          targetPort: 8000
+          exposure: internal
   - name: venv
     volume:
+      ephemeral: false
       size: 1G
 commands:
-  - id: run
+  - id: install-requirements-setup-continue
     exec:
-      label: "Run the application"
+      label: "Install requirements and setup continue extension"
       component: python
       workingDir: ${PROJECTS_ROOT}/python-template
-      commandLine: python -m venv .venv && . .venv/bin/activate && python hello-world.py
+      commandLine: >-
+        python -m venv .venv 
+        . .venv/bin/activate
+        pip install -r requirements.txt
+        cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json
+      group:
+        kind: build
+        isDefault: true
+  - id: start-fastapi-server
+    exec:
+      label: "Start FastAPI server"
+      component: python
+      workingDir: ${PROJECTS_ROOT}/python-template
+      commandLine: uvicorn server:app --reload
       group:
         kind: run
-  - id: copyconfig
-    exec:
-      component: python
-      commandLine: "echo 'copy config.json' && cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json"
-events:
+        isDefault: true
+  # - id: run
+  #   exec:
+  #     label: "Run the application"
+  #     component: python
+  #     workingDir: ${PROJECTS_ROOT}/python-template
+  #     commandLine: python -m venv .venv && . .venv/bin/activate && python hello-world.py
+  #     group:
+  #       kind: run
+
+  # - id: copyconfig
+  #   exec:
+  #     component: python
+  #     commandLine: "echo 'copy config.json' && cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json"
+
+# events:
   # preStart:
     # - copyconfig
-  postStart:
-    - copyconfig
+  # postStart:
+  #   - copyconfig
   # preStop:
   #   - command3
   # postStop:
