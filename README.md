@@ -42,11 +42,13 @@ uvicorn server:app --reload
 
 ```bash
 #Pod名の確認
+oc project [ocプロジェクト名]
 oc get pod 
-oc port-forward -n [ocプロジェクト名] pod/[Pod名] 8000:8000
+oc port-forward pod/[Pod名] 8000:8000
 
 #実行例
-oc port-forward -n che-kube-admin-devspaces-8h5s6r pod/workspace7082c4664770461c-7b65549556-7q8jz 8000:8000
+oc project che-kube-admin-devspaces-8h5s6r
+oc port-forward pod/workspace1a9f3febcb89414d-6986d5b994-mc25h 8000:8000
 
 #別ターミナルで以下を実行する
 curl http://localhost:8000
