@@ -24,28 +24,18 @@ components:
 commands:
   - id: setup-venv
     exec:
-      label: "Setup venv"
       component: python
       workingDir: ${PROJECTS_ROOT}/python-template
       commandLine: "python -m venv .venv && . .venv/bin/activate"
-      group:
-        kind: build
-        isDefault: true
   - id: install-requirements
     exec:
-      label: "Install requirements"
       component: python
       workingDir: ${PROJECTS_ROOT}/python-template
       commandLine: "pip install -r requirements.txt"
-      group:
-        kind: build
   - id: copyconfig
     exec:
       component: python
       commandLine: "echo 'copy config.json' && sleep 3 && cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json"
-      group:
-        kind: build
-
   - id: start-fastapi-server
     exec:
       label: "Start FastAPI server"
@@ -57,12 +47,12 @@ commands:
         isDefault: true
 
 events:
-  preStart:
+  # preStart:
+  #   - command1
+  postStart:
     - setup-venv
     - install-requirements
     - copyconfig
-  # postStart:
-  #   - copyconfig
   # preStop:
   #   - command3
   # postStop:
