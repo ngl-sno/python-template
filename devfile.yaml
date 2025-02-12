@@ -26,12 +26,12 @@ commands:
     exec:
       component: python
       workingDir: ${PROJECTS_ROOT}/python-template
-      commandLine: "python -m venv .venv && . .venv/bin/activate"
-  - id: install-requirements
-    exec:
-      component: python
-      workingDir: ${PROJECTS_ROOT}/python-template
-      commandLine: "pip install -r requirements.txt"
+      commandLine: "python -m venv /home/user/.venv && . /home/user/.venv/bin/activate && pip install -r requirements.txt"
+  # - id: install-requirements
+  #   exec:
+  #     component: python
+  #     workingDir: ${PROJECTS_ROOT}/python-template
+  #     commandLine: "pip install -r requirements.txt"
   - id: copyconfig
     exec:
       component: python
@@ -41,7 +41,7 @@ commands:
       label: "Start FastAPI server"
       component: python
       workingDir: ${PROJECTS_ROOT}/python-template
-      commandLine: uvicorn server:app --reload
+      commandLine: ". /home/user/.venv/bin/activate && uvicorn server:app --reload"
       group:
         kind: run
         isDefault: true
@@ -51,17 +51,9 @@ events:
   #   - command1
   postStart:
     - setup-venv
-    - install-requirements
+    # - install-requirements
     - copyconfig
   # preStop:
   #   - command3
   # postStop:
   #   - command4  
-
-#   - id: copyconfig
-#     exec:
-#       component: python
-#       commandLine: "[[ ! -d /home/user/.continue ]] && mkdir /home/user/.continue && cp /projects/python-template/.continue.example/config.json /home/user/.continue/config.json"
-# events:
-#   postStart:
-#     - copyconfig
