@@ -27,11 +27,7 @@ commands:
       label: "Install requirements and setup continue extension"
       component: python
       workingDir: ${PROJECTS_ROOT}/python-template
-      commandLine: >-
-        python -m venv .venv 
-        . .venv/bin/activate
-        pip install -r requirements.txt
-        cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json
+      commandLine: "python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json"
       group:
         kind: build
         isDefault: true
