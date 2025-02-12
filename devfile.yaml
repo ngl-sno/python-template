@@ -1,6 +1,6 @@
 schemaVersion: 2.2.2
 metadata:
-  name: python-hello-world
+  name: ngl-sno-template
 components:
   - name: python
     container:
