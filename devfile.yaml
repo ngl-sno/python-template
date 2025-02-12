@@ -28,7 +28,7 @@ commands:
   - id: copyconfig
     exec:
       component: python
-      commandLine: "echo 'copy config.json' && cp -p /etc/secret/continue-config-secret/.continuerc.json /home/user/.continue/config.json"
+      commandLine: "echo 'copy config.json' && cp -p /etc/secret/continue-config-secret/config.json /home/user/.continue/config.json"
 events:
   # preStart:
     # - copyconfig

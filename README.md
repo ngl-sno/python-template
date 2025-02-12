@@ -9,8 +9,11 @@ cp -p .continue.example/config.json .
 oc create secret generic continue-config-secret \
   --from-file=config.json=config.json \
   -n che-kube-admin-devspaces-8h5s6r
+# oc apply -f secrect.yaml
+
   oc get secrets -n your-namespace
   oc get secret continue-config-secret -o jsonpath='{.data.config\.json}' -n your-namespace | base64 --decode
+oc delete secrets/continue-config-secret -n che-kube-admin-devspaces-8h5s6r
 ```
 
 https://docs.redhat.com/ja/documentation/red_hat_openshift_dev_spaces/3.3/html/user_guide/mounting-secrets#mounting-secrets
