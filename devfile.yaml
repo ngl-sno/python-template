@@ -30,8 +30,14 @@ commands:
       component: python
       commandLine: "cp -p /etc/secret/continue-config-secret/.continuerc.json /home/user/.continue/config.json"
 events:
-  postStart:
+  preStart:
     - copyconfig
+  # postStart:
+  #   - command2
+  # preStop:
+  #   - command3
+  # postStop:
+  #   - command4  
 
 #   - id: copyconfig
 #     exec:
