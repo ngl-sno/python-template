@@ -44,6 +44,29 @@ oc label secret continue-config-secret \
 #oc delete secrets/continue-config-secret -n che-kube-admin-devspaces-8h5s6r
 ```
 
+### GitHub以外のプライベートなGitリポジトリを利用する際の準備
+
+プライベートなGitリポジトリを利用する場合は、なんらかの方法でその認証情報をDevSpaces側に認識させる必要がある.
+今回はガイドにある、PAT(Personal Access Token)で伝搬させる方法を示す(*2).
+or 今回はガイドにある、Secret経由で伝搬させる方法を示す.
+
+PATを採用する理由は、個々人で該当のGitリポジトリからPAT取得できること,かつOpenShiftの操作(Secret)を可能な限り回避するためである.
+
+PATの取得(GitLabの場合)
+
+![gitlab　scope　example](img/gitlab-scope-example.png)
+
+OpenShift Dev Spaces ダッシュボードの User Preferences ページで設定する
+
+![access devspace userpreference](img/access-devspace-userpreference.png)
+
+`https://<openshift_dev_spaces_fqdn>/dashboard/#/user-preferences?tab=personal-access-tokens`
+
+例:
+`https://devspaces.apps.sno417.gpsjp-redhat.com/dashboard/#/user-preferences?tab=personal-access-tokens`
+
+![add pat](img/add-pat.png)
+
 ##　2. DevSpaces上での実行
 
 OpenShiftにログインしてDevSpacesを起動する.
@@ -165,6 +188,8 @@ devfile.yamlで定義したcopyconfigをTask Runする
 *1 シークレットのマウント
 https://docs.redhat.com/ja/documentation/red_hat_openshift_dev_spaces/3.18/html/user_guide/using-credentials-and-configurations-in-workspaces#mounting-secrets
 
+*2 Git プロバイダーアクセストークンの使用  
+https://docs.redhat.com/ja/documentation/red_hat_openshift_dev_spaces/3.18/html/user_guide/using-credentials-and-configurations-in-workspaces#using-a-git-provider-access-token
 
 https://chatgpt.com/share/67aa542f-dd0c-8013-a9dd-5510927e651c
 
